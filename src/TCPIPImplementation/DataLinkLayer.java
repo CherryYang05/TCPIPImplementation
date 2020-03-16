@@ -70,4 +70,3 @@ public class DataLinkLayer implements jpcap.PacketReceiver {
         }
     }
 }
-//
