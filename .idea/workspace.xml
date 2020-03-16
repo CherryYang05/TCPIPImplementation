@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="">
+    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="IDEA增加了Git版本管理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,6 +34,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Cherry &lt;754449629@qq.com&gt;" />
         <option value="CherryYang05 &lt;754449629@qq.com&gt;" />
         <option value="CherryYang05" />
         <option value="Cherry" />
@@ -41,6 +42,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="ce40e0c9-adca-4c79-a7a8-3dbdafd22e97" />
   </component>
   <component name="ProjectId" id="1Z7WgH6sbMVkczSXfG7ZNrWPiQU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -110,7 +114,7 @@
       <updated>1584190721585</updated>
       <workItem from="1584190725595" duration="4980000" />
       <workItem from="1584196085754" duration="3921000" />
-      <workItem from="1584343524519" duration="1440000" />
+      <workItem from="1584343524519" duration="1962000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -119,7 +123,21 @@
       <option name="project" value="LOCAL" />
       <updated>1584345050108</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="IDEA增加了Git版本管理">
+      <created>1584345384282</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584345384282</updated>
+    </task>
+    <task id="LOCAL-00003" summary="IDEA增加了Git版本管理">
+      <created>1584345613924</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1584345613924</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
