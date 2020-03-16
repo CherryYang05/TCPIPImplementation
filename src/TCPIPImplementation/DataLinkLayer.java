@@ -36,7 +36,6 @@ public class DataLinkLayer implements jpcap.PacketReceiver {
                 if (tp.rst) {
                     System.out.println("Reset connection...");
                 }
-
                 System.out.println("Protocol version is: " + tp.version);
                 System.out.println("This is destination ip: " + tp.dst_ip);
                 System.out.println("This is source ip: " + tp.src_ip);
@@ -71,3 +70,4 @@ public class DataLinkLayer implements jpcap.PacketReceiver {
         }
     }
 }
+//测试

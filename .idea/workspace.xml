@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="" />
+    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/TCPIPImplementation/DataLinkLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TCPIPImplementation/DataLinkLayer.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +112,7 @@
       <workItem from="1584190725595" duration="4980000" />
       <workItem from="1584196085754" duration="3921000" />
       <workItem from="1584343524519" duration="2187000" />
+      <workItem from="1584346141362" duration="223000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -139,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584345864188</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="IDEA增加了Git版本管理">
+      <created>1584346226831</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584346226831</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +160,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
