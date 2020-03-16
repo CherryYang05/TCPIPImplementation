@@ -41,9 +41,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="a7abb2c6-2ec7-48a3-900a-2368ae485220" />
-  </component>
   <component name="ProjectId" id="1Z7WgH6sbMVkczSXfG7ZNrWPiQU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
@@ -113,8 +110,6 @@
       <workItem from="1584190725595" duration="4980000" />
       <workItem from="1584196085754" duration="3921000" />
       <workItem from="1584343524519" duration="2187000" />
-      <workItem from="1584346141362" duration="223000" />
-      <workItem from="1584347127041" duration="243000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -144,21 +139,7 @@
       <option name="project" value="LOCAL" />
       <updated>1584345864188</updated>
     </task>
-    <task id="LOCAL-00005" summary="IDEA增加了Git版本管理">
-      <created>1584346226831</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1584346226831</updated>
-    </task>
-    <task id="LOCAL-00006" summary="IDEA的Git版本管理测试">
-      <created>1584347352155</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1584347352155</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,9 +150,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -180,9 +159,6 @@
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
     <MESSAGE value="IDEA增加了Git版本管理" />
-    <MESSAGE value="IDEA的Git版本管理测试" />
-    <option name="LAST_COMMIT_MESSAGE" value="IDEA的Git版本管理测试" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="LAST_COMMIT_MESSAGE" value="IDEA增加了Git版本管理" />
   </component>
 </project>
