@@ -59,7 +59,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -112,6 +112,7 @@
       <workItem from="1584190725595" duration="4980000" />
       <workItem from="1584196085754" duration="3921000" />
       <workItem from="1584343524519" duration="2187000" />
+      <workItem from="1584347680749" duration="231000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -141,7 +142,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584345864188</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="IDEA增加了Git版本管理">
+      <created>1584347702673</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1584347702673</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
