@@ -1,5 +1,6 @@
 package datalinklayer;
 
+import ICMPProtocolLayer.ICMPProtocolLayer;
 import jpcap.JpcapCaptor;
 import jpcap.JpcapSender;
 import jpcap.NetworkInterface;
@@ -28,6 +29,7 @@ import java.net.InetAddress;
 
 public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver, IMacReceiver {
 
+    private static final String IP = "192.168.1.1";
     //单例
     private static DataLinkLayer instance = null;
     private NetworkInterface device = null;
@@ -67,7 +69,7 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
         JpcapCaptor jpcapCaptor = null;
 
         try {
-            jpcapCaptor = JpcapCaptor.openDevice(device, 2000, false, 3000);
+            jpcapCaptor = JpcapCaptor.openDevice(device, 3000, false, 3000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,6 +81,8 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
 
         //测试 ARP 协议
         this.testARPProtocol();
+        //测试ICMP协议
+        this.testICMPProtocol();
     }
 
     /**
@@ -170,19 +174,29 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
         for (byte b : mac) {
             System.out.print(Integer.toHexString(b & 0xff) + ":");
         }
-        System.out.println();
+        System.out.println('\n');
     }
 
-
+    /**
+     * 测试 ARP 协议
+     */
     private void testARPProtocol() {
         ARPProtocolLayer arpProtocolLayer = new ARPProtocolLayer();
         registerPacketReceiver(arpProtocolLayer);
         byte[] ip;
         try {
-            ip = InetAddress.getByName("192.168.1.1").getAddress();
+            ip = InetAddress.getByName(IP).getAddress();
             arpProtocolLayer.getMacByIp(ip, this);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 测试 ICMP 协议
+     */
+    private void testICMPProtocol() {
+        ICMPProtocolLayer icmpLayer = new ICMPProtocolLayer();
+        this.registerPacketReceiver(icmpLayer);
     }
 }

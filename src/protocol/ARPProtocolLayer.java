@@ -142,6 +142,7 @@ public class ARPProtocolLayer implements PacketReceiver {
         if (!receiverList.contains(receiver)) {
             receiverList.add(receiver);
         }
+        return;
     }
 
     /**
