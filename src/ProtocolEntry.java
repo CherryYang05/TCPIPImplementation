@@ -51,7 +51,7 @@ public class ProtocolEntry {
         NetworkInterface device = null;
 
         //显示所有网卡
-        //showNetWorkCard(devices);
+        showNetWorkCard(devices);
 
         System.out.println("There are " + devices.length + " devices.");
 
@@ -73,7 +73,7 @@ public class ProtocolEntry {
         }
 
         //我的电脑是 5 号网卡为硬件网卡
-        device = devices[5];
+        //device = devices[2];
 
         System.out.println("Open device: " + device.name);
 
