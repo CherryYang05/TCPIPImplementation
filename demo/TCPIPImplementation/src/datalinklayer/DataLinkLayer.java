@@ -4,21 +4,24 @@ package datalinklayer;
 import jpcap.NetworkInterfaceAddress;
 import jpcap.packet.EthernetPacket;
 import jpcap.packet.Packet;
-import utils.IMacReceiver;
+import protocol.ARPProtocolLayer;
+import protocol.ICMPProtocolLayer;
+
 import utils.PacketProvider;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 
-import ARPProtocolLayer.ARPProtocolLayer;
-import ICMPProtocolLayer.ICMPProtocolLayer;
 import jpcap.JpcapCaptor;
 import jpcap.JpcapSender;
 import jpcap.NetworkInterface;
 
-public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver, IMacReceiver{   
+public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver{   
 	    private static DataLinkLayer instance = null;
 	    private NetworkInterface device = null;
 	    private Inet4Address ipAddress = null;
@@ -51,11 +54,6 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
 			}
 			
 			this.sender = captor.getJpcapSenderInstance();
-			
-			//测试arp协议
-			this.testARPProtocol();
-			// change 2 测试ICMP协议
-			this.testICMPProtocol();
 	    }
 	    
 	    private Inet4Address getDeviceIpAddress() {
@@ -117,42 +115,27 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
 			ether.src_mac= this.device.mac_address;
 			ether.dst_mac= dstMacAddress;
 			packet.datalink = ether;
-			
 			sender.sendPacket(packet);
+			
+			//将发生的数据包写成文件以便于调试。
+			String path = "G:/dump.txt";
+			try {
+				FileOutputStream fos = new FileOutputStream(path);
+				fos.write(dstMacAddress);
+				fos.write(ether.src_mac);
+				byte[] buf = new byte[2];
+				ByteBuffer buffer = ByteBuffer.wrap(buf);
+				buffer.putShort(frameType);
+				fos.write(buffer.array());
+				fos.write(data);
+				fos.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
-	    
-	 private void testARPProtocol() {
-		 ARPProtocolLayer arpLayer = new ARPProtocolLayer();
-		 this.registerPacketReceiver(arpLayer);
-		 
-		 byte[] ip;
-		try {
-			ip = InetAddress.getByName("192.168.2.1").getAddress();
-			arpLayer.getMacByIP(ip, this);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-	 }
-	 
-	 // change 1
-	 private void testICMPProtocol() {
-		 ICMPProtocolLayer icmpLayer = new ICMPProtocolLayer();
-		 this.registerPacketReceiver(icmpLayer);
-	 }
-
-	@Override
-	public void receiveMacAddress(byte[] ip, byte[] mac) {
-		System.out.println("receive arp reply msg with sender ip: ");
-		for (byte b: ip) {
-			System.out.print(Integer.toUnsignedString(b & 0xff) + ".");
-		}
-		System.out.println("with sender mac :");
-		for (byte b : mac)
-			System.out.print(Integer.toHexString(b&0xff) + ":");
-		
-		System.out.println("\n");
-	}
 }
 

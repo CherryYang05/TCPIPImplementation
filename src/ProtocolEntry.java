@@ -1,3 +1,4 @@
+import Application.PingApp;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
@@ -6,6 +7,7 @@ import jpcap.packet.Packet;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 
 /**
  * @Author Cherry
@@ -51,7 +53,7 @@ public class ProtocolEntry {
         NetworkInterface device = null;
 
         //显示所有网卡
-        showNetWorkCard(devices);
+        //showNetWorkCard(devices);
 
         System.out.println("There are " + devices.length + " devices.");
 
@@ -72,8 +74,8 @@ public class ProtocolEntry {
             }
         }
 
-        //我的电脑是 5 号网卡为硬件网卡
-        //device = devices[2];
+        //我的电脑是 4 号网卡为硬件网卡
+        device = devices[4];
 
         System.out.println("Open device: " + device.name);
 
@@ -81,6 +83,16 @@ public class ProtocolEntry {
 
         DataLinkLayer linkLayerInstance = DataLinkLayer.getInstance();
         linkLayerInstance.initWithOpenDevice(device);
+
+        //测试PING APP
+        String ip = "192.168.1.1";
+        try {
+            InetAddress address = InetAddress.getByName(ip);
+            PingApp pingApp = new PingApp(1, address.getAddress());
+            pingApp.startPing();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         jpcap.loopPacket(-1, (jpcap.PacketReceiver) linkLayerInstance);
     }

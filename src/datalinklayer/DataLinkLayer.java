@@ -1,18 +1,18 @@
 package datalinklayer;
 
-import ICMPProtocolLayer.ICMPProtocolLayer;
 import jpcap.JpcapCaptor;
 import jpcap.JpcapSender;
 import jpcap.NetworkInterface;
 import jpcap.NetworkInterfaceAddress;
 import jpcap.packet.EthernetPacket;
 import jpcap.packet.Packet;
-import protocol.ARPProtocolLayer;
-import utils.IMacReceiver;
 import utils.PacketProvider;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.InetAddress;
+import java.nio.ByteBuffer;
 
 /**
  * @Author Cherry
@@ -27,7 +27,7 @@ import java.net.InetAddress;
  * 它就会把该地址推送给所有需要的接收者
  */
 
-public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver, IMacReceiver {
+public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver {
 
     private static final String IP = "192.168.1.1";
     //单例
@@ -79,10 +79,10 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
             System.out.println("Device open failed...");
         }
 
-        //测试 ARP 协议
-        this.testARPProtocol();
-        //测试ICMP协议
-        this.testICMPProtocol();
+        ////测试 ARP 协议
+        //this.testARPProtocol();
+        ////测试ICMP协议
+        //this.testICMPProtocol();
     }
 
     /**
@@ -150,53 +150,96 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
          * 12-13字节：数据包发送类型，0x0806表示ARP包，0x0800表示ip包，
          */
         EthernetPacket ether = new EthernetPacket();
-        ether.frametype = EthernetPacket.ETHERTYPE_ARP;
+        //ether.frametype = EthernetPacket.ETHERTYPE_ARP;
+        ether.frametype = frameType;
         ether.src_mac = this.device.mac_address;
         ether.dst_mac = dstMacAddress;
         packet.datalink = ether;
         jpcapSender.sendPacket(packet);
-    }
 
-
-    /**
-     * 对 IMacReceiver 接口中方法的实现
-     *
-     * @param ip  ip
-     * @param mac mac
-     */
-    @Override
-    public void receiveMacAddress(byte[] ip, byte[] mac) {
-        System.out.println("Receive ARP reply msg with sender ip: ");
-        for (byte b : ip) {
-            System.out.print(Integer.toUnsignedString(b & 0xff) + ".");
-        }
-        System.out.println("\nWith sender Mac:");
-        for (byte b : mac) {
-            System.out.print(Integer.toHexString(b & 0xff) + ":");
-        }
-        System.out.println('\n');
-    }
-
-    /**
-     * 测试 ARP 协议
-     */
-    private void testARPProtocol() {
-        ARPProtocolLayer arpProtocolLayer = new ARPProtocolLayer();
-        registerPacketReceiver(arpProtocolLayer);
-        byte[] ip;
+        //将发送的数据包写成文件以便于调试。
+        //String path = "G:/dump.txt";
         try {
-            ip = InetAddress.getByName(IP).getAddress();
-            arpProtocolLayer.getMacByIp(ip, this);
-        } catch (Exception e) {
+            File file = new File("F:\\Code\\Java\\Java4TCPIP", "dump.txt");  //创建文件对象
+            //FileOutputStream fos = new FileOutputStream("F:\\Code\\Java\\Java4TCPIP\\dump.txt");
+            FileWriter fw = new FileWriter(file);
+            //fos.write(dstMacAddress);
+            //fos.write(ether.src_mac);
+            //byte[] buf = new byte[2];
+            //ByteBuffer buffer = ByteBuffer.wrap(buf);
+            //buffer.putShort(frameType);
+            //fos.write(buffer.array());
+            //fos.write(data);
+            //fos.close();
+            fw.write(BinaryToHexString(dstMacAddress));
+            fw.write(BinaryToHexString(ether.src_mac));
+            byte[] buf = new byte[2];
+            ByteBuffer buffer = ByteBuffer.wrap(buf);
+            buffer.putShort(frameType);
+            fw.write(BinaryToHexString(buffer.array()));
+            fw.write(BinaryToHexString(data));
+            fw.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * 测试 ICMP 协议
-     */
-    private void testICMPProtocol() {
-        ICMPProtocolLayer icmpLayer = new ICMPProtocolLayer();
-        this.registerPacketReceiver(icmpLayer);
+    private static String hexStr = "0123456789ABCDEF";
+
+    public static String BinaryToHexString(byte[] bytes) {
+
+        String result = "";
+        String hex = "";
+        for (int i = 0; i < bytes.length; i++) {
+            //字节高4位
+            hex = String.valueOf(hexStr.charAt((bytes[i] & 0xF0) >> 4));
+            //字节低4位
+            hex += String.valueOf(hexStr.charAt(bytes[i] & 0x0F));
+            result += hex + " ";
+        }
+        return result;
     }
+
+
+    ///**
+    // * 对 IMacReceiver 接口中方法的实现
+    // *
+    // * @param ip  ip
+    // * @param mac mac
+    // */
+    //@Override
+    //public void receiveMacAddress(byte[] ip, byte[] mac) {
+    //    System.out.println("Receive ARP reply msg with sender ip: ");
+    //    for (byte b : ip) {
+    //        System.out.print(Integer.toUnsignedString(b & 0xff) + ".");
+    //    }
+    //    System.out.println("\nWith sender Mac:");
+    //    for (byte b : mac) {
+    //        System.out.print(Integer.toHexString(b & 0xff) + ":");
+    //    }
+    //    System.out.println('\n');
+    //}
+
+    ///**
+    // * 测试 ARP 协议
+    // */
+    //private void testARPProtocol() {
+    //    ARPProtocolLayer arpProtocolLayer = new ARPProtocolLayer();
+    //    registerPacketReceiver(arpProtocolLayer);
+    //    byte[] ip;
+    //    try {
+    //        ip = InetAddress.getByName(IP).getAddress();
+    //        arpProtocolLayer.getMacByIp(ip, this);
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
+    //}
+    //
+    ///**
+    // * 测试 ICMP 协议
+    // */
+    //private void testICMPProtocol() {
+    //    ICMPProtocolLayer icmpLayer = new ICMPProtocolLayer();
+    //    this.registerPacketReceiver(icmpLayer);
+    //}
 }
