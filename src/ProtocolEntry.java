@@ -1,3 +1,4 @@
+import Application.HPingApp;
 import Application.PingApp;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
@@ -84,11 +85,12 @@ public class ProtocolEntry {
         DataLinkLayer linkLayerInstance = DataLinkLayer.getInstance();
         linkLayerInstance.initWithOpenDevice(device);
 
-        //测试PING APP
+        //测试PING APP 和 HPing App
         String ip = "192.168.1.1";
         try {
             InetAddress address = InetAddress.getByName(ip);
-            PingApp pingApp = new PingApp(1, address.getAddress());
+            //PingApp pingApp = new PingApp(1, address.getAddress());
+            PingApp pingApp = new HPingApp(1, address.getAddress());
             pingApp.startPing();
         } catch (Exception e) {
             e.printStackTrace();

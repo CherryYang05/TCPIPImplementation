@@ -2,84 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Cherry.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.classpath" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.ipynb_checkpoints/buliding advanced networks-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.project" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/TCPIPImplementation.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/Application/Application.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/Application/ApplicationManager.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/Application/IApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/Application/PingApp.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/ProtocolEntry.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/datalinklayer/DataLinkLayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ARPProtocolLayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ICMPEchoHeader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ICMPProtocolLayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ICMPUnReachableMsgHandler$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ICMPUnReachableMsgHandler$ICMP_ERROR_MSG_CODE.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ICMPUnReachableMsgHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/IICMPErrorMsgHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/IPProtocolLayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/IProtocol.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/protocol/ProtocolManager.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/utils/IPacketProvider.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/utils/PacketProvider.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/bin/utils/Utility.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/Application/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/Application/ApplicationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/Application/IApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/Application/PingApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/ARPProtocolLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/ICMPEchoHeader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/ICMPProtocolLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/ICMPUnReachableMsgHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/IICMPErrorMsgHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/IPProtocolLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/IProtocol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/protocol/ProtocolManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/utils/Utility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dump.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Application/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Application/ApplicationManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Application/IApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Application/PingApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/ICMPEchoHeader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/IPProtocolLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/IProtocol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/ProtocolManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/Utility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Application/HPingApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/protocol/ICMPTimeStampHeader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ARPProtocolLayer/ARPProtocolLayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ICMPProtocolLayer/ICMPProtocolLayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ICMPProtocolLayer/ICMPUnReachableMsgHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ICMPProtocolLayer/IICMPErrorMsgHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ProtocolEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/ProtocolEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/datalinklayer/DataLinkLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/demo/TCPIPImplementation/src/datalinklayer/DataLinkLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo/TCPIPImplementation/src/utils/IMacReceiver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/ICMPProtocolLayer$ICMP_MSG_TYPE.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/ICMPProtocolLayer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/ICMPUnreachableMsgHandler$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/ICMPUnreachableMsgHandler$ICMP_ERROR_MSG_CODE.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/ICMPUnreachableMsgHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ICMPProtocolLayer/IICMPErrorMsgHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dump.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dump.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/datalinklayer/DataLinkLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/datalinklayer/DataLinkLayer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ARPProtocolLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ARPProtocolLayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/utils/IMacReceiver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ICMPProtocolLayer/ICMPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPProtocolLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ICMPProtocolLayer/ICMPUnreachableMsgHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPUnreachableMsgHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ICMPProtocolLayer/IICMPErrorMsgHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/IICMPErrorMsgHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/PingApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/PingApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProtocolEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProtocolEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datalinklayer/DataLinkLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/datalinklayer/DataLinkLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocol/ARPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ARPProtocolLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/IMacReceiver.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ICMPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPProtocolLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ProtocolManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ProtocolManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/新建文本文档.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -206,7 +141,9 @@
       <workItem from="1585153347281" duration="121000" />
       <workItem from="1585235422612" duration="1201000" />
       <workItem from="1585401134058" duration="225000" />
-      <workItem from="1586314265044" duration="18515000" />
+      <workItem from="1586314265044" duration="18757000" />
+      <workItem from="1586355010442" duration="1072000" />
+      <workItem from="1586782045188" duration="8680000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -292,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585153372652</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="NO.6/7 重构代码，并实现PING应用">
+      <created>1586343683029</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1586343683029</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +266,8 @@
     <MESSAGE value="NO.3/4 实现了ARP协议" />
     <MESSAGE value="NO.4/5 实现了ICMP协议(type=3,code=3)" />
     <MESSAGE value="更改了网卡名称" />
-    <option name="LAST_COMMIT_MESSAGE" value="更改了网卡名称" />
+    <MESSAGE value="NO.6/7 重构代码，并实现PING应用" />
+    <option name="LAST_COMMIT_MESSAGE" value="NO.6/7 重构代码，并实现PING应用" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -330,19 +275,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ProtocolEntry.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/protocol/ProtocolManager.java</url>
-          <line>172</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/datalinklayer/DataLinkLayer.java</url>
-          <line>176</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/Application/HPingApp.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -16,10 +16,10 @@ import java.util.Random;
  */
 
 public class PingApp extends Application {
-    private int echo_times = 0;
-    private short identifier = 0;
-    private short sequence = 0;
-    private byte[] destIp = null;
+    protected int echo_times = 0;
+    protected short identifier = 0;
+    protected short sequence = 0;
+    protected byte[] destIp = null;
 
     /**
      * @param times  连续发送多少次数据包
@@ -50,7 +50,7 @@ public class PingApp extends Application {
     }
 
     private byte[] createPackage(byte[] data) throws Exception {
-        byte[] icmpEchoHeader = this.createICMPEchoHeader();
+        byte[] icmpEchoHeader = this.createICMPHeader();
         if (icmpEchoHeader == null) {
             throw new Exception("ICMP Header create fail");
         }
@@ -65,7 +65,7 @@ public class PingApp extends Application {
         return packetBuffer.array();
     }
 
-    private byte[] createICMPEchoHeader() {
+    protected byte[] createICMPHeader() {
         IProtocol icmpProto = ProtocolManager.getInstance().getProtocol("icmp");
         if (icmpProto == null) {
             return null;

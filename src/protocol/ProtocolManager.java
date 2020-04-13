@@ -148,6 +148,7 @@ public class ProtocolManager implements PacketReceiver {
     }
 
     /**
+     * 处理传送回来的 ICMP 协议包
      * @param packet
      */
     private void handleICMPPacket(Packet packet) {
