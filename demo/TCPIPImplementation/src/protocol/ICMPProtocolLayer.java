@@ -17,6 +17,8 @@ public class ICMPProtocolLayer implements IProtocol{
     public ICMPProtocolLayer() {
     	//增加icmp echo 协议包头创建对象
     	protocol_header_list.add(new ICMPEchoHeader());
+    	
+    	protocol_header_list.add(new ICMPTimeStampHeader());
     }
 	//checkType针对的是IPV6
 	

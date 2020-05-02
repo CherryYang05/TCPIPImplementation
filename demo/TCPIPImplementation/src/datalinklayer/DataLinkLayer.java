@@ -118,7 +118,7 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
 			sender.sendPacket(packet);
 			
 			//将发生的数据包写成文件以便于调试。
-			String path = "G:/dump.txt";
+			String path = "/Users/apple/Downloads/dump.txt";
 			try {
 				FileOutputStream fos = new FileOutputStream(path);
 				fos.write(dstMacAddress);
