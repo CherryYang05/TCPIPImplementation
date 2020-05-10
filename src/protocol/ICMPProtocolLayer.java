@@ -26,6 +26,8 @@ public class ICMPProtocolLayer implements IProtocol {
         protocol_header_list.add(new ICMPEchoHeader());
 
         protocol_header_list.add(new ICMPTimeStampHeader());
+
+        protocol_header_list.add(new ICMPTimeExceededHeader());
     }
 
     //checkType针对的是IPV6

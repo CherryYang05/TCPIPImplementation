@@ -31,7 +31,7 @@ public class ICMPUnreachableMsgHandler implements IICMPErrorMsgHandler {
      * @return boolean
      */
     @Override
-    public boolean handlerICMPERRORMsg(int type, int code, byte[] data) {
+    public boolean handleICMPErrorMsg(int type, int code, byte[] data) {
         if (type != ICMPUnreachableMsgHandler.ICMP_UNREACHABLE_TYPE) {
             return false;
         }

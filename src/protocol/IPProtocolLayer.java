@@ -137,18 +137,40 @@ public class IPProtocolLayer implements IProtocol {
         buffer.put(packet.header);
         buffer.put(packet.data);
 
-        HashMap<String, Object> headerInfo = new HashMap<String, Object>();
+        HashMap<String, Object> headerInfo = new HashMap<>();
 
         //获取发送者IP
         byte[] src_ip = new byte[4];
         buffer.position(SOURCE_IP_OFFSET);
         buffer.get(src_ip, 0, 4);
         headerInfo.put("source_ip", src_ip);
+
+        /*
+        //打印每个包的发送者的IP信息
+        System.out.print("发送者IP:");
+        for (int i = 0; i < src_ip.length; i++) {
+            System.out.print((src_ip[i] & 0xff) + ".");
+        }
+        System.out.println();
+        */
+
+
         //获取接受者IP
         byte[] dest_ip = new byte[4];
         buffer.position(DEST_IP_OFFSET);
         buffer.get(dest_ip, 0, 4);
         headerInfo.put("dest_ip", dest_ip);
+
+        /*
+        //打印每个包的接受者IP信息
+        System.out.print("接收者IP:");
+        for (int i = 0; i < dest_ip.length; i++) {
+            System.out.print((dest_ip[i] & 0xff) + ".");
+        }
+        System.out.println();
+        */
+
+
         //确保接受者是我们自己
         byte[] ip = DataLinkLayer.getInstance().deviceIPAddress();
         for (int i = 0; i < ip.length; i++) {
@@ -165,7 +187,8 @@ public class IPProtocolLayer implements IProtocol {
         int k = 0;
         if (protocol == 1) {
             k = 2;
-            System.out.println("receive protocol 2");
+            //ICMP协议的协议号
+            System.out.println("Receive protocol 1(ICMP)\n");
         }
 
         byte headerLength = buffer.get(HEADER_LENGTH_OFFSET);
@@ -179,10 +202,6 @@ public class IPProtocolLayer implements IProtocol {
         buffer.position(headerLength + ETHERNET_FRAME_HEADER_LENGTH);
         buffer.get(data, 0, dataLength);
         headerInfo.put("header", data);
-
-
         return headerInfo;
-
-
     }
 }

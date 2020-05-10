@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 public class ARPProtocolLayer implements IProtocol {
 
-    //private HashMap<byte[], byte[]> ipToMacTable = new HashMap<>();
+    //public static HashMap<byte[], byte[]> ipToMacTable = new HashMap<>();
     //private HashMap<Integer, ArrayList<IMacReceiver>> ipToMacReceiverTable = new HashMap<>();
 
     /*
@@ -75,24 +75,29 @@ public class ARPProtocolLayer implements IProtocol {
         //转化为小端模式
         short op = ByteBuffer.wrap(opcode).getShort();
         if (op == ARPPacket.ARP_REQUEST) {
-            System.out.println("\nARP is sending a request...");
+            System.out.println("ARP is sending a request...\n");
         }
         if (op != ARPPacket.ARP_REPLY) {
             return false;
         }
-        System.out.println("Reply...");
-        //获取目的设备的 ip
+        //获取接受者IP，确定该数据包是回复给我们的
         byte[] ip = DataLinkLayer.getInstance().deviceIPAddress();
+
+        //System.out.println("Send from IP:");
         for (int i = 0; i < 4; i++) {
-            //System.out.print(ip[i] + "*");
             if (ip[i] != data[ARP_TARGET_IP_START + i]) {
                 return false;
             }
+            //System.out.print((ip[i] & 0xff) + ".");
         }
+        //System.out.println();
+        //System.out.println("Reply...");
 
         //获取发送者 ip
         byte[] senderIP = new byte[4];
         System.arraycopy(data, ARP_SENDER_IP_START, senderIP, 0, 4);
+
+
         //获取发送者 Mac 地址
         byte[] senderMac = new byte[6];
         System.arraycopy(data, ARP_SENDER_MAC_START, senderMac, 0, 6);
@@ -100,7 +105,18 @@ public class ARPProtocolLayer implements IProtocol {
         infoTable.put("sender_mac", senderMac);
         infoTable.put("sender_ip", senderIP);
 
-        ////更新 ARP 缓存表
+        //输出相关信息
+        //System.out.println("Receive ARP reply msg with sender IP: ");
+        //for (byte b : senderIP) {
+        //    System.out.print(Integer.toUnsignedString(b & 0xff) + ".");
+        //}
+        //System.out.println("\nWith sender MAC:");
+        //for (byte b : senderMac) {
+        //    System.out.print(Integer.toHexString(b & 0xff) + ":");
+        //}
+        //System.out.println('\n');
+
+        //更新 ARP 缓存表
         //ipToMacTable.put(senderIP, senderMac);
         //
         ////通知接收者 Mac 地址
@@ -157,7 +173,7 @@ public class ARPProtocolLayer implements IProtocol {
      */
     private byte[] makeARPRequestMsg(byte[] ip) {
         if (ip == null) {
-            return ip;
+            return null;
         }
 
         DataLinkLayer dataLinkInstance = DataLinkLayer.getInstance();
@@ -223,7 +239,7 @@ public class ARPProtocolLayer implements IProtocol {
     @Override
     public HashMap<String, Object> handlePacket(Packet packet) {
         byte[] header = packet.header;
-        HashMap<String, Object> infoTable = new HashMap<String, Object>();
+        HashMap<String, Object> infoTable = new HashMap<>();
         analyseARPMsg(header, infoTable);
         return infoTable;
     }

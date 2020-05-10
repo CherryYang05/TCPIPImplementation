@@ -44,6 +44,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" scope="TEST" name="apidocs" level="project" />
+    <orderEntry type="library" scope="TEST" name="apidocs" level="project" />
   </component>
 </module>

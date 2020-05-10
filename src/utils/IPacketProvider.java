@@ -10,5 +10,5 @@ import jpcap.PacketReceiver;
  */
 
 public interface IPacketProvider {
-    public void registerPacketReceiver(PacketReceiver receiver);
+    void registerPacketReceiver(PacketReceiver receiver);
 }

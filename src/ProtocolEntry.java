@@ -1,5 +1,4 @@
-import Application.HPingApp;
-import Application.PingApp;
+import Application.TraceRoute;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
@@ -76,9 +75,9 @@ public class ProtocolEntry {
         }
 
         //我的电脑是 4 号网卡为硬件网卡
-        device = devices[4];
+        //device = devices[4];
 
-        System.out.println("Open device: " + device.name);
+        System.out.println("Open device: " + device.name + "\n");
 
         JpcapCaptor jpcap = JpcapCaptor.openDevice(device, 2000, true, 20);
 
@@ -86,12 +85,18 @@ public class ProtocolEntry {
         linkLayerInstance.initWithOpenDevice(device);
 
         //测试PING APP 和 HPing App
-        String ip = "192.168.1.1";
+        //String ip = "192.168.1.1";
+        //String ip = "172.20.10.1";
+        //traceroute 百度
+        String ip = "112.80.248.75";
         try {
             InetAddress address = InetAddress.getByName(ip);
             //PingApp pingApp = new PingApp(1, address.getAddress());
-            PingApp pingApp = new HPingApp(1, address.getAddress());
-            pingApp.startPing();
+            //PingApp pingApp = new HPingApp(1, address.getAddress());
+            //pingApp.startPing();
+
+            TraceRoute traceRoute = new TraceRoute(address.getAddress());
+            traceRoute.startTraceRoute();
         } catch (Exception e) {
             e.printStackTrace();
         }

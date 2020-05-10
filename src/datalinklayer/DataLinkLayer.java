@@ -22,14 +22,13 @@ import java.nio.ByteBuffer;
  * ARPProtocolLayer 要求所有通过它获取 mac地址的对象
  * 都必须实现 IMacReceiver接口，有可能很多个上层协议对象
  * 都需要获得同一个 ip 对应设备的 mac 地址，它会把这些对象
- * 存储在一个队里中，一旦给定ip设备返回包含它 mac 地址的 ARP
+ * 存储在一个队列中，一旦给定ip设备返回包含它 mac 地址的 ARP
  * 消息后，ARPProtocolLayer从消息中解读出 mac 地址，
  * 它就会把该地址推送给所有需要的接收者
  */
 
 public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceiver {
 
-    private static final String IP = "192.168.1.1";
     //单例
     private static DataLinkLayer instance = null;
     private NetworkInterface device = null;
@@ -156,6 +155,7 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
         ether.dst_mac = dstMacAddress;
         packet.datalink = ether;
         jpcapSender.sendPacket(packet);
+        //System.out.println("发送成功");
 
         //将发送的数据包写成文件以便于调试。
         //String path = "G:/dump.txt";

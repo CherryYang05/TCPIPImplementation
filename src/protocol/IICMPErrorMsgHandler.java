@@ -8,5 +8,5 @@ package protocol;
  */
 
 public interface IICMPErrorMsgHandler {
-    boolean handlerICMPERRORMsg(int type, int code, byte[] data);
+    boolean handleICMPErrorMsg(int type, int code, byte[] data);
 }

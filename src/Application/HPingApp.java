@@ -59,16 +59,16 @@ public class HPingApp extends PingApp {
 
     /**
      * 处理传送回来的包
-     *
+     * 这里的时间戳不可靠，没有时钟同步，在 NTP 中会有进一步的介绍
      * @param data
      */
     public void handleData(HashMap<String, Object> data) {
         short sequence = (short) data.get("sequence");
         int receive_time = (int) data.get("receive_time");
         System.out.println("Receive time for timestamp request " + sequence +
-                " for " + (receive_time - send_time) + " millis");
+                " for " + (send_time - receive_time) / 1000 + " s");
         int transmit_time = (int) data.get("transmit_time");
         System.out.println("Receive reply for ping request " + sequence +
-                " for " + (transmit_time - send_time) + " millis");
+                " for " + (send_time - transmit_time) / 1000 + " s\n");
     }
 }
