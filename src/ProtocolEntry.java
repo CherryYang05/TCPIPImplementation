@@ -1,4 +1,4 @@
-import Application.TraceRoute;
+import Application.DHCPApplication;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
@@ -53,7 +53,7 @@ public class ProtocolEntry {
         NetworkInterface device = null;
 
         //显示所有网卡
-        //showNetWorkCard(devices);
+        showNetWorkCard(devices);
 
         System.out.println("There are " + devices.length + " devices.");
 
@@ -75,7 +75,7 @@ public class ProtocolEntry {
         }
 
         //我的电脑是 4 号网卡为硬件网卡
-        //device = devices[4];
+        device = devices[4];
 
         System.out.println("Open device: " + device.name + "\n");
 
@@ -91,12 +91,15 @@ public class ProtocolEntry {
         String ip = "112.80.248.75";
         try {
             InetAddress address = InetAddress.getByName(ip);
+            //测试Ping和HPing
             //PingApp pingApp = new PingApp(1, address.getAddress());
             //PingApp pingApp = new HPingApp(1, address.getAddress());
             //pingApp.startPing();
-
-            TraceRoute traceRoute = new TraceRoute(address.getAddress());
-            traceRoute.startTraceRoute();
+            //测试TraceRoute
+            //TraceRoute traceRoute = new TraceRoute(address.getAddress());
+            //traceRoute.startTraceRoute();
+            DHCPApplication dhcpApp = new DHCPApplication();
+            dhcpApp.dhcpDiscovery();
         } catch (Exception e) {
             e.printStackTrace();
         }

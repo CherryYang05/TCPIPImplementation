@@ -14,8 +14,9 @@ public class Application implements IApplication {
     private final static boolean CLOSED = false;
 
     public Application() {
-        ApplicationManager manager = ApplicationManager.getInstance();
-        manager.addApplication(this);
+        //ApplicationManager manager = ApplicationManager.getInstance();
+        //manager.addApplication(this);
+        ApplicationManager.addApplication(this);
     }
 
     @Override
@@ -28,6 +29,11 @@ public class Application implements IApplication {
         return CLOSED;
     }
 
+    /**
+     * 处理接收到的数据包
+     *
+     * @param data
+     */
     @Override
     public void handleData(HashMap<String, Object> data) {
 

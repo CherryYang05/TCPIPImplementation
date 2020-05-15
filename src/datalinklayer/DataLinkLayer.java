@@ -159,6 +159,7 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
 
         //将发送的数据包写成文件以便于调试。
         //String path = "G:/dump.txt";
+        //int cnt = 0;
         try {
             File file = new File("F:\\Code\\Java\\Java4TCPIP", "dump.txt");  //创建文件对象
             //FileOutputStream fos = new FileOutputStream("F:\\Code\\Java\\Java4TCPIP\\dump.txt");
@@ -178,6 +179,10 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
             buffer.putShort(frameType);
             fw.write(BinaryToHexString(buffer.array()));
             fw.write(BinaryToHexString(data));
+            //System.out.println("cnt=" + cnt);
+            //if ((cnt++) % 16 == 0) {
+            //    fw.write("\n");
+            //}
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -46,8 +46,8 @@ public class UDPProtocolLayer implements IProtocol {
         byteBuffer.order(ByteOrder.BIG_ENDIAN);
         byteBuffer.putShort(total_length);
 
-        //UDP 报头的检验和可以直接设为 0xFFFF
-        char checkSum = 65535;
+        //UDP 报头的检验和可以直接设为 0xFFFF(在DHCP中设为0xFFFF会产生错误，这里设为0)
+        char checkSum = 0x0;
         byteBuffer.putChar(checkSum);
 
         if (data != null) {

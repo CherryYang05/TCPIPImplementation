@@ -136,6 +136,15 @@ public class ProtocolManager implements PacketReceiver {
     }
 
     /**
+     * 向全体广播
+     *
+     * @param data data
+     */
+    public void broadCast(byte[] data) {
+        dataLinkLayer.sendData(data, broadcast, EthernetPacket.ETHERTYPE_IP);
+    }
+
+    /**
      * @param packet packet
      */
     @Override
