@@ -10,9 +10,9 @@ import java.util.HashMap;
  */
 
 public interface IApplication {
-    int getPort();
+    public int getPort();
 
-    boolean isClosed();
+    public boolean isClosed();
 
-    void handleData(HashMap<String, Object> data);
+    public void handleData(HashMap<String, Object> data);
 }

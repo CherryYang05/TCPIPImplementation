@@ -5,6 +5,7 @@ import protocol.IProtocol;
 import protocol.ProtocolManager;
 import protocol.UDPProtocolLayer;
 
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Random;
@@ -399,19 +400,144 @@ public class DHCPApplication extends Application {
      * @return
      */
     private boolean readFirstPart(byte[] data) {
-        return false;
+        ByteBuffer buffer = ByteBuffer.wrap(data);
+        byte reply = buffer.get(DHCP_MSG_TYPE_OFFSET);
+        if (reply != DHCP_MSG_OFFER) {
+            return false;
+        }
+
+        //获取分配的IP
+        byte[] your_addr = new byte[4];
+        buffer.position(DHCP_YOUR_IP_ADDRESS_OFFSET);
+        buffer.get(your_addr, 0, your_addr.length);
+        System.out.println("Available IP Offer by DHCP Server is:");
+        try {
+            InetAddress ip = InetAddress.getByAddress(your_addr);
+            System.out.println(ip.getHostAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //获取DHCP服务器主机IP
+        buffer.position(DHCP_NEXT_IP_ADDRESS_OFFSET);
+        byte[] next_server_ip = new byte[4];
+        buffer.get(next_server_ip, 0, next_server_ip.length);
+        System.out.println("Next DHCP Server is:");
+        try {
+            InetAddress ser_ip = InetAddress.getByAddress(next_server_ip);
+            System.out.println(ser_ip.getHostAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     /**
      * 处理数据包 option 部分
-     *
+     * position 将直接定位到 Option 字段(240B)处
      * @param data data
+     *
      */
     private void readOptions(byte[] data) {
-
+        ByteBuffer buffer = ByteBuffer.wrap(data);
+        buffer.position(DHCP_OPTIONS_OFFSET);
+        while (true) {
+            byte type = buffer.get();
+            if (type == OPTION_END) {
+                break;
+            }
+            switch (type) {
+                case DHCP_MSG_TYPE:
+                    //跳过第二个长度字段
+                    buffer.get();
+                    if (buffer.get() == DHCP_MSG_OFFER) {
+                        System.out.println("Receive DHCP Offer Message from Server...");
+                    }
+                    break;
+                case DHCP_SERVER_IDENTIFER:
+                    //buffer.get();
+                    printOptionArray("DHCP Server Identifier:", buffer);
+                    break;
+                case DHCP_IP_ADDRESS_LEASE_TIME:
+                    //越过长度字段
+                    buffer.get();
+                    int lease_time_secs = buffer.getInt();
+                    System.out.println("The ip will lease to us for " + lease_time_secs + "seconds");
+                    break;
+                case DHCP_RENEWAL_TIME:
+                    //越过长度字段
+                    buffer.get();
+                    int renew_time = buffer.getInt();
+                    System.out.println("we need to renew ip after " + renew_time + "seconds");
+                    break;
+                case DHCP_REBINDING_TIME:
+                    //越过长度字段
+                    buffer.get();
+                    int rebinding_time = buffer.getInt();
+                    System.out.println("we need to rebinding new ip after  " + rebinding_time + " seconds");
+                    break;
+                case DHCP_SUBNET_MASK:
+                    printOptionArray("Subnet mask is : ", buffer);
+                    break;
+                case DHCP_BROADCAST_ADDRESS:
+                    printOptionArray("Broadcasting Address is : ", buffer);
+                    break;
+                case DHCP_ROUTER:
+                    printOptionArray("Router IP Address is : ", buffer);
+                    break;
+                case DHCP_DOMAIN_NAME_SERVER:
+                    printOptionArray("Domain name server is : ", buffer);
+                    break;
+                case DHCP_DOMAIN_NAME:
+                    int len = buffer.get();
+                    for (int i = 0; i < len; i++) {
+                        System.out.print((char) buffer.get() + " ");
+                    }
+                    break;
+            }
+        }
     }
 
-    private void printOptionArray(String content, ByteBuffer bufer) {
+    private void printOptionArray(String content, ByteBuffer buffer) {
+        System.out.println(content);
+        int len = buffer.get();
+        if (len == 4) {
+            byte[] buf = new byte[4];
+            for (int i = 0; i < len; i++) {
+                buf[i] = buffer.get();
+            }
 
+            try {
+                InetAddress addr = InetAddress.getByAddress(buf);
+                System.out.println(addr.getHostAddress());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (len == 8) {
+            byte[] buf = new byte[4];
+            for (int i = 0; i < 4; ++i) {
+                buf[i] = buffer.get();
+            }
+            try {
+                InetAddress addr = InetAddress.getByAddress(buf);
+                System.out.println(addr.getHostAddress());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < 4; ++i) {
+                buf[i] = buffer.get();
+            }
+            try {
+                InetAddress addr = InetAddress.getByAddress(buf);
+                System.out.println(addr.getHostAddress());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            for (int i = 0; i < len; i++) {
+                System.out.print(buffer.get() + ".");
+            }
+        }
+        System.out.println();
     }
 }

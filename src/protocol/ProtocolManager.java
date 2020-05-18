@@ -1,6 +1,8 @@
 package protocol;
 
 import Application.Application;
+import Application.ApplicationManager;
+import Application.IApplication;
 import datalinklayer.DataLinkLayer;
 import jpcap.PacketReceiver;
 import jpcap.packet.EthernetPacket;
@@ -175,11 +177,15 @@ public class ProtocolManager implements PacketReceiver {
 
         //处理IP包头
         if (etherHeader.frametype == EthernetPacket.ETHERTYPE_IP) {
-            handleIPPacket(packet);
+            try {
+                handleIPPacket(packet);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void handleIPPacket(Packet packet) {
+    private void handleIPPacket(Packet packet) throws Exception {
         IProtocol ipProtocol = (IProtocol) new IPProtocolLayer();
         HashMap<String, Object> info = ipProtocol.handlePacket(packet);
         if (info == null) {
@@ -203,9 +209,35 @@ public class ProtocolManager implements PacketReceiver {
                 case IPPacket.IPPROTO_ICMP:
                     handleICMPPacket(packet, info);
                     break;
+                case IPPacket.IPPROTO_UDP:
+                    handleUDPPacket(packet, info);
                 default:
                     return;
             }
+        }
+    }
+
+    /**
+     * 处理传送回来的 UDP 协议包(DHCP used)
+     *
+     * @param packet
+     * @param infoFromUDPLayer
+     */
+    private void handleUDPPacket(Packet packet, HashMap<String, Object> infoFromUDPLayer) throws Exception {
+        IProtocol udpProtocol = new UDPProtocolLayer();
+        HashMap<String, Object> headerInfo = udpProtocol.handlePacket(packet);
+        if (headerInfo == null) {
+            throw new Exception("UDP Packet Header is null...");
+        }
+        short dstPort = (short) headerInfo.get("dest_port");
+        int k = 0;
+        if (dstPort == 68) {
+            k = 1;
+        }
+        //根据端口获得应该接收UDP数据包的程序
+        IApplication app = ApplicationManager.getInstance().getApplicationByPort(dstPort);
+        if (app != null) {
+            app.handleData(headerInfo);
         }
     }
 

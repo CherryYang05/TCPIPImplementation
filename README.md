@@ -8,4 +8,5 @@
 5. 重构代码并实现PING应用
 6. 实现HPing应用
 7. 实现TraceRoute应用
-8. 实现DHCP协议
+8. 实现DHCP协议(Discovery 和 Offer)
+9. 实现DHCP协议(Request 和 ACK)
