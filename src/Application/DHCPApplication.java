@@ -143,6 +143,22 @@ public class DHCPApplication extends Application {
 
     private static byte DHCP_MSG_OFFER = 2;
 
+    //记录来自服务器提供的IP
+    private InetAddress server_supply_ip;
+    private static byte OPTION_MSG_REQUEST_TYPE = 3;
+    private static byte OPTION_MSG_REQUEST_LENGTH = 1;
+    private static byte OPTION_REQUESTED_IP_TYPE_LENGTH = 6;
+
+    //DHCP服务器确认类型号
+    private static byte DHCP_MSG_ACK = 5;
+
+    private final static int DHCP_STATE_DISCOVER = 0;
+    private final static int DHCP_STATE_REQUESTING = 1;
+    private final static int DHCP_STATE_ACK = 5;
+
+    //该DHCP协议中维护了一个状态机
+    private static int dhcp_current_state = DHCP_STATE_DISCOVER;
+
     public DHCPApplication() {
         Random random = new Random();
         transaction_id = random.nextInt();
@@ -303,15 +319,15 @@ public class DHCPApplication extends Application {
                 end.length + padding.length];
         buffer.clear();
         buffer = ByteBuffer.wrap(dhcp_options_part);
-        buffer.put(option_msg_type);//53
-        buffer.put(client_identifier);//61
-        buffer.put(requestedIP);//50
-        buffer.put(host_name);//12
-        buffer.put(vendor);//60
-        buffer.put(parameter_request_list);//55
+        buffer.put(option_msg_type);                    //53
+        buffer.put(client_identifier);                  //61
+        buffer.put(requestedIP);                        //50
+        buffer.put(host_name);                          //12
+        buffer.put(vendor);                             //60
+        buffer.put(parameter_request_list);             //55
         //buffer.put(maximun_dhcp_msg_size);
         //buffer.put(ip_lease_time);
-        buffer.put(end);//255
+        buffer.put(end);                                //255
         buffer.put(padding);
     }
 
@@ -386,6 +402,8 @@ public class DHCPApplication extends Application {
      */
     @Override
     public void handleData(HashMap<String, Object> headerInfo) {
+        System.out.println("\n=============== DHCP ===============");
+        System.out.println("====================================");
         byte[] data = (byte[]) headerInfo.get("data");
         boolean readSuccess = readFirstPart(data);
         if (readSuccess) {
@@ -412,8 +430,9 @@ public class DHCPApplication extends Application {
         buffer.get(your_addr, 0, your_addr.length);
         System.out.println("Available IP Offer by DHCP Server is:");
         try {
-            InetAddress ip = InetAddress.getByAddress(your_addr);
-            System.out.println(ip.getHostAddress());
+            //记录下服务器提供可用的IP
+            server_supply_ip = InetAddress.getByAddress(your_addr);
+            System.out.println(server_supply_ip.getHostAddress());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -435,8 +454,8 @@ public class DHCPApplication extends Application {
     /**
      * 处理数据包 option 部分
      * position 将直接定位到 Option 字段(240B)处
-     * @param data data
      *
+     * @param data data
      */
     private void readOptions(byte[] data) {
         ByteBuffer buffer = ByteBuffer.wrap(data);
@@ -447,54 +466,68 @@ public class DHCPApplication extends Application {
                 break;
             }
             switch (type) {
-                case DHCP_MSG_TYPE:
+                case DHCP_MSG_TYPE:                 //53
                     //跳过第二个长度字段
                     buffer.get();
-                    if (buffer.get() == DHCP_MSG_OFFER) {
-                        System.out.println("Receive DHCP Offer Message from Server...");
+                    byte msg_type = buffer.get();
+                    if (msg_type == DHCP_MSG_OFFER) {
+                        //接收到DHCP_OFFER后，将状态转变为requesting
+                        dhcp_current_state = DHCP_STATE_REQUESTING;
+                        System.out.println("============ DHCP OFFER ============");
+                        System.out.println("\nReceive DHCP Offer Message from Server...");
+                    } else if (msg_type == DHCP_MSG_ACK) {
+                        dhcp_current_state = DHCP_STATE_ACK;
+                        System.out.println("============= DHCP ACK =============");
+                        System.out.println("\nReceive DHCP ACK Message from Server...");
                     }
                     break;
-                case DHCP_SERVER_IDENTIFER:
+                case DHCP_SERVER_IDENTIFER:         //54
                     //buffer.get();
                     printOptionArray("DHCP Server Identifier:", buffer);
                     break;
-                case DHCP_IP_ADDRESS_LEASE_TIME:
+                case DHCP_IP_ADDRESS_LEASE_TIME:    //51
                     //越过长度字段
                     buffer.get();
                     int lease_time_secs = buffer.getInt();
-                    System.out.println("The ip will lease to us for " + lease_time_secs + "seconds");
+                    System.out.println("The ip will lease to us for " + lease_time_secs + " seconds");
                     break;
-                case DHCP_RENEWAL_TIME:
+                case DHCP_RENEWAL_TIME:             //58
                     //越过长度字段
                     buffer.get();
                     int renew_time = buffer.getInt();
-                    System.out.println("we need to renew ip after " + renew_time + "seconds");
+                    System.out.println("We Need to Renew IP after " + renew_time + " seconds");
                     break;
-                case DHCP_REBINDING_TIME:
+                case DHCP_REBINDING_TIME:           //59
                     //越过长度字段
                     buffer.get();
                     int rebinding_time = buffer.getInt();
                     System.out.println("we need to rebinding new ip after  " + rebinding_time + " seconds");
                     break;
-                case DHCP_SUBNET_MASK:
+                case DHCP_SUBNET_MASK:              //1
                     printOptionArray("Subnet mask is : ", buffer);
                     break;
-                case DHCP_BROADCAST_ADDRESS:
+                case DHCP_BROADCAST_ADDRESS:        //28
                     printOptionArray("Broadcasting Address is : ", buffer);
                     break;
-                case DHCP_ROUTER:
+                case DHCP_ROUTER:                   //3
                     printOptionArray("Router IP Address is : ", buffer);
                     break;
-                case DHCP_DOMAIN_NAME_SERVER:
+                case DHCP_DOMAIN_NAME_SERVER:       //6
                     printOptionArray("Domain name server is : ", buffer);
                     break;
-                case DHCP_DOMAIN_NAME:
+                case DHCP_DOMAIN_NAME:              //15
                     int len = buffer.get();
                     for (int i = 0; i < len; i++) {
                         System.out.print((char) buffer.get() + " ");
                     }
                     break;
             }
+        }
+        //进行状态机转化
+        if (dhcp_current_state == DHCP_STATE_REQUESTING) {
+            trigger_action_by_state();
+        } else if (dhcp_current_state == DHCP_STATE_ACK) {
+            System.out.println("=============== DHCP END ===============\n");
         }
     }
 
@@ -539,5 +572,158 @@ public class DHCPApplication extends Application {
             }
         }
         System.out.println();
+    }
+
+    /**
+     * 状态机转化
+     */
+    private void trigger_action_by_state() {
+        switch (dhcp_current_state) {
+            case DHCP_STATE_REQUESTING:
+                dhcpRequest();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 发送 DHCP Request
+     */
+    private void dhcpRequest() {
+        if (server_supply_ip == null) {
+            return;
+        }
+        byte[] options = constructDHCPRequestOptions();
+        byte[] dhcpDiscoverBuffer = new byte[dhcp_first_part.length + MAGIC_COOKIE.length + options.length];
+        ByteBuffer buffer = ByteBuffer.wrap(dhcpDiscoverBuffer);
+        buffer.put(dhcp_first_part);
+        buffer.put(MAGIC_COOKIE);
+        buffer.put(dhcp_options_part);
+        byte[] udpHeader = createUDPHeader(dhcpDiscoverBuffer);
+        byte[] ipHeader = createIP4Header(udpHeader.length);
+        byte[] dhcpPacket = new byte[udpHeader.length + ipHeader.length];
+        buffer = ByteBuffer.wrap(dhcpPacket);
+        buffer.put(ipHeader);
+        buffer.put(udpHeader);
+        //将消息向全体广播
+        ProtocolManager.getInstance().broadCast(dhcpPacket);
+    }
+
+    /**
+     * 组装 DHCP Request Options字段
+     *
+     * @return
+     */
+    private byte[] constructDHCPRequestOptions() {
+        byte[] option_msg_type = new byte[OPTION_MSG_TYPE_LENGTH];
+        ByteBuffer buffer = ByteBuffer.wrap(option_msg_type);
+        //Option: (53) DHCP Message Type (Discover)
+        buffer.put(DHCP_MSG_TYPE);
+        buffer.put(OPTION_MSG_REQUEST_LENGTH);
+        buffer.put(OPTION_MSG_REQUEST_TYPE);
+
+        //Option: (61) Client identifier
+        byte[] client_identifier = new byte[OPTION_CLIENT_IDENTIFIER_LENGTH];
+        buffer = ByteBuffer.wrap(client_identifier);
+        buffer.put(OPTION_CLIENT_IDENTIFIER);
+        buffer.put(OPTION_CLIENT_IDENTIFIER_DATA_LENGTH);
+        buffer.put(OPTION_CLIENT_IDENTIFIER_HARDWARE_TYPE);
+        buffer.put(DataLinkLayer.getInstance().deviceMacAddress());
+
+        //option 57 Maximum DHCP Message Size
+        byte[] maximun_dhcp_msg_size = new byte[OPTION_MAXIMUN_DHCP_MESSAGE_SIZE_LENGTH];
+        buffer = ByteBuffer.wrap(maximun_dhcp_msg_size);
+        buffer.put(OPTION_MAXIMUM_DHCP_MESSAGE_SIZE_TYPE);
+        buffer.put(OPTION_MAXIMUN_DHCP_MESSAGE_SIZE_DATA_LENGTH);
+        buffer.putShort(OPTION_MAXIMUN_DHCP_MESSAGE_SIZE_CONTENT);
+
+        //Option: (50) Requested IP Address (192.168.1.101)
+        byte[] requested_ip_addr = new byte[OPTION_REQUESTED_IP_TYPE_LENGTH +
+                server_supply_ip.getAddress().length];
+        buffer = ByteBuffer.wrap(requested_ip_addr);
+        buffer.put(OPTION_REQUESTED_IP_TYPE);
+        buffer.put(OPTION_REQUESTED_IP_LENGTH);
+        buffer.put(server_supply_ip.getAddress());
+
+
+        //option 51 ip address lease time
+        byte[] ip_lease_time = new byte[OPTION_IP_LEASE_TIME_LENGTH];
+        buffer = ByteBuffer.wrap(ip_lease_time);
+        buffer.put(OPTION_IP_LEASE_TIME);
+        buffer.put(OPTION_IP_LEASE_TIME_DATA_LENGTH);
+        buffer.putInt(OPTION_IP_LEASE_TIME_CONTENT);
+
+        //Option: (12) Host Name
+        byte[] host_name = new byte[OPTION_HOST_NAME_LENGTH];
+        buffer = ByteBuffer.wrap(host_name);
+        buffer.put(OPTION_HOST_NAME);
+        buffer.put(OPTION_HOST_NAME_DATA_LENGTH);
+        buffer.put(OPTION_HOST_NAME_CONTENT);
+
+        //Option: (60) Vendor class identifier
+        byte[] vendor = new byte[OPTION_VENDOR_LENGTH + 2];
+        buffer.clear();
+        buffer = ByteBuffer.wrap(vendor);
+        buffer.put(OPTION_VENDOR_TYPE);
+        buffer.put(OPTION_VENDOR_LENGTH);
+        buffer.put(OPTION_VENDOR_IDENTIFIER);
+
+        //Option: (55) Parameter Request List
+        byte[] parameter_request_list = new byte[OPTION_PARAMETER_REQUEST_LENGTH];
+        buffer.clear();
+        buffer = ByteBuffer.wrap(parameter_request_list);
+        buffer.put(OPTION_PARAMETER_REQUEST_LIST);
+        buffer.put(OPTION_PARAMETER_REQUEST_DATA_LENGTH);
+        byte[] option_buffer = new byte[]{
+                OPTIONS_PARAMETER_SUBNET_MASK,                  //1
+                OPTIONS_PARAMETER_ROUTER,                       //3
+                OPTIONS_PARAMETER_DOMAIN_NAME_SERVER,           //6
+                OPTIONS_PARAMETER_DOMAIN_NAME,                  //15
+                OPTIONS_PARAMETER_PERFORM_ROUTER_DISCOVER,      //31
+                OPTIONS_PARAMETER_STATIC_ROUTER,                //33
+                OPTIONS_PARAMETER_VENDOR_SPECIFIC_INFORMATION,  //43
+                OPTIONS_PARAMETER_NETBIOS_SERVER,               //44
+                OPTIONS_PARAMETER_NETBIOS_TYPE,                 //46
+                OPTIONS_PARAMETER_NETBIOS_SCOPE,                //47
+                OPTIONS_PARAMETER_DOMAIN_SEARCH,                //119
+                OPTIONS_PARAMETER_CLASSLESS_STATIC_ROUTER,      //121
+                OPTIONS_PARAMETER_CLASSLESS,                    //249
+                OPTIONS_PARAMETER_PROXY,                        //252
+                //OPTIONS_PARAMETER_LDPA,                         //95
+                //OPTIONS_PARAMETER_IP_NAME_SERVER,               //44
+                //OPTIONS_PARAMETER_IP_NODE_TYPE                  //46
+        };
+        buffer.put(option_buffer);
+
+        //Option: (255) End
+        byte[] end = new byte[1];
+        end[0] = OPTION_END;
+        byte[] padding = new byte[3];
+        dhcp_options_part = new byte[option_msg_type.length +
+                client_identifier.length +
+                requested_ip_addr.length +
+                host_name.length +
+                vendor.length +
+                parameter_request_list.length +
+                maximun_dhcp_msg_size.length +
+                ip_lease_time.length +
+                end.length +
+                padding.length
+                ];
+
+        buffer = ByteBuffer.wrap(dhcp_options_part);
+        buffer.put(option_msg_type);                    //53
+        buffer.put(client_identifier);                  //61
+        buffer.put(requested_ip_addr);                  //50
+        buffer.put(host_name);                          //12
+        buffer.put(vendor);                             //60
+        buffer.put(parameter_request_list);             //55
+        buffer.put(maximun_dhcp_msg_size);              //57
+        buffer.put(ip_lease_time);                      //51
+        buffer.put(end);                                //255
+        buffer.put(padding);
+
+        return buffer.array();
     }
 }

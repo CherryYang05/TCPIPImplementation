@@ -75,7 +75,7 @@ public class ProtocolEntry {
         }
 
         //我的电脑是 4 号网卡为硬件网卡
-        device = devices[4];
+        device = devices[5];
 
         System.out.println("Open device: " + device.name + "\n");
 

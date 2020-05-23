@@ -110,6 +110,19 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
         }
     }
 
+    /**
+     * 构造一个不存在的mac地址
+     *
+     * @return fakeMac
+     */
+    public byte[] deviceFakeMacAddress() {
+        byte[] fakeMac = new byte[macAddress.length];
+        for (int i = 0; i < macAddress.length; i++) {
+            fakeMac[i] = (byte) (macAddress[i] + 1);
+        }
+        return fakeMac;
+    }
+
     public byte[] deviceIPAddress() {
         return this.ipAddress.getAddress();
     }

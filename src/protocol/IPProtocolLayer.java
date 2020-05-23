@@ -172,6 +172,8 @@ public class IPProtocolLayer implements IProtocol {
 
 
         //确保接受者是我们自己
+        //测试 DHCP 时暂时注释，因为要构造一个虚拟 MAC 地址，因此 IP 肯定和本机不一样
+
         byte[] ip = DataLinkLayer.getInstance().deviceIPAddress();
         for (int i = 0; i < ip.length; i++) {
             if (ip[i] != dest_ip[i]) {
