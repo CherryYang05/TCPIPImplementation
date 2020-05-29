@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="No.9 完善了DHCP协议(discovery,offer)，修改了部分bug">
+    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Application/DNSApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dump.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dump.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/datalinklayer/DataLinkLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/datalinklayer/DataLinkLayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/IPProtocolLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/IPProtocolLayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ProtocolManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ProtocolManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/UDPProtocolLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/UDPProtocolLayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Application/DHCPApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/DHCPApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProtocolEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProtocolEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/datalinklayer/DataLinkLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/datalinklayer/DataLinkLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/protocol/IPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/IPProtocolLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +59,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TCPTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -154,7 +150,9 @@
       <workItem from="1589540616780" duration="13096000" />
       <workItem from="1589616321135" duration="3263000" />
       <workItem from="1589789534555" duration="3822000" />
-      <workItem from="1590210616941" duration="7135000" />
+      <workItem from="1590210616941" duration="7212000" />
+      <workItem from="1590217954934" duration="25000" />
+      <workItem from="1590733036870" duration="8078000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -275,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1589792087845</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="No.9 完善了DHCP协议(Request 和 ACK)">
+      <created>1590217818117</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1590217818117</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,7 +315,8 @@
     <MESSAGE value="NO.7 实现了traceroute应用" />
     <MESSAGE value="No.8 实现了DHCP协议" />
     <MESSAGE value="No.9 完善了DHCP协议(discovery,offer)，修改了部分bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="No.9 完善了DHCP协议(discovery,offer)，修改了部分bug" />
+    <MESSAGE value="No.9 完善了DHCP协议(Request 和 ACK)" />
+    <option name="LAST_COMMIT_MESSAGE" value="No.9 完善了DHCP协议(Request 和 ACK)" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -351,6 +357,21 @@
           <url>file://$PROJECT_DIR$/src/Application/DHCPApplication.java</url>
           <line>472</line>
           <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Test.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Application/DNSApplication.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Application/DNSApplication.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

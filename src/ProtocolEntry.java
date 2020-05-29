@@ -1,9 +1,8 @@
-import Application.DHCPApplication;
+import Application.DNSApplication;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
 import jpcap.NetworkInterfaceAddress;
-import jpcap.packet.Packet;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -17,12 +16,13 @@ import java.net.InetAddress;
  */
 
 public class ProtocolEntry {
-    public void receivePacket(Packet packet) {
-        System.out.println(packet);
-        System.out.println("Receive a packet");
-    }
 
-    public static void showNetWorkCard(NetworkInterface[] devices) throws IOException {
+    //public void receivePacket(Packet packet) {
+    //    System.out.println(packet);
+    //    System.out.println("Receive a packet");
+    //}
+
+    private static void showNetWorkCard(NetworkInterface[] devices) throws IOException {
 
         JpcapCaptor captor = null;
         for (int i = 0; i < devices.length; i++) {
@@ -47,7 +47,7 @@ public class ProtocolEntry {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         //获取网卡列表
         NetworkInterface[] devices = JpcapCaptor.getDeviceList();
         NetworkInterface device = null;
@@ -57,7 +57,7 @@ public class ProtocolEntry {
 
         System.out.println("There are " + devices.length + " devices.");
 
-        for (int i = 0; i < devices.length; i++) {
+        for (int i = devices.length - 1; i >= 0; i--) {
             boolean isFindDevice = false;
 
             for (NetworkInterfaceAddress net : devices[i].addresses) {
@@ -75,7 +75,7 @@ public class ProtocolEntry {
         }
 
         //我的电脑是 4 号网卡为硬件网卡
-        device = devices[5];
+        //device = devices[5];
 
         System.out.println("Open device: " + device.name + "\n");
 
@@ -85,10 +85,9 @@ public class ProtocolEntry {
         linkLayerInstance.initWithOpenDevice(device);
 
         //测试PING APP 和 HPing App
-        //String ip = "192.168.1.1";
-        //String ip = "172.20.10.1";
+        String ip = "192.168.1.1";
         //traceroute 百度
-        String ip = "112.80.248.75";
+        //String ip = "112.80.248.75";
         try {
             InetAddress address = InetAddress.getByName(ip);
             //测试Ping和HPing
@@ -98,8 +97,11 @@ public class ProtocolEntry {
             //测试TraceRoute
             //TraceRoute traceRoute = new TraceRoute(address.getAddress());
             //traceRoute.startTraceRoute();
-            DHCPApplication dhcpApp = new DHCPApplication();
-            dhcpApp.dhcpDiscovery();
+            //测试DHCP
+            //DHCPApplication dhcpApp = new DHCPApplication();
+            //dhcpApp.dhcpDiscovery();
+            DNSApplication dnsApplication = new DNSApplication(address.getAddress(), "pan.baidu.com");
+            dnsApplication.queryDomain();
         } catch (Exception e) {
             e.printStackTrace();
         }
