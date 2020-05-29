@@ -4,6 +4,7 @@ import protocol.IProtocol;
 import protocol.ProtocolManager;
 import protocol.UDPProtocolLayer;
 
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Random;
@@ -175,4 +176,205 @@ public class DNSApplication extends Application {
         return ipPrtocol.createHeader(headerInfo);
     }
 
+    /**
+     * 解析服务器回发的数据包，首先读取头2字节判断 transition_id 是否与我们发送时使用的一致
+     *
+     * @param headerInfo data
+     */
+    @Override
+    public void handleData(HashMap<String, Object> headerInfo) {
+        System.out.println("\n==================== DNS START ====================");
+        byte[] data = (byte[]) headerInfo.get("data");
+        if (data == null) {
+            System.out.println("Empty data...");
+            return;
+        }
+        ByteBuffer buffer = ByteBuffer.wrap(data);
+        short transitionID = buffer.getShort();
+        if (transitionID != transition_id) {
+            System.out.println("TransitionID is different!!!");
+            return;
+        }
+        //读取2字节flag各个比特位的含义
+        short flag = buffer.getShort();
+        readFlags(flag);
+        //下面两个字节表示请求数量(Questions)
+        short questionCount = buffer.getShort();
+        System.out.println("Client send " + questionCount + " requests.");
+        //两字节表示服务器回复信息的数量
+        short answerCount = buffer.getShort();
+        System.out.println("Server return " + answerCount + " answers.");
+        //两字节表示数据拥有属性信息的数量
+        short authorityCount = buffer.getShort();
+        System.out.println("Server return " + authorityCount + " authority resources.");
+        //两字节表示附加信息的数量
+        short additionalInfoCount = buffer.getShort();
+        System.out.println("Server return " + additionalInfoCount + " additional info.");
+
+        //处理回复包中的Question部分，这部分湖人查询包中的内容一模一样
+        readQuestions(questionCount, buffer);
+        //处理服务器返回的信息
+        readAnswers(answerCount, buffer);
+    }
+
+    /**
+     * 分析 flag 字段各个比特位的含义
+     *
+     * @param flag
+     */
+    private void readFlags(short flag) {
+        //最高字节为1表示该数据包为回复数据包
+        if ((flag & (1 << 15)) != 0) {
+            System.out.println("This is packet returned from server...");
+        }
+        //如果第9个比特位为1表示客户端请求递归式查询
+        if ((flag & (1 << 8)) != 0) {
+            System.out.println("Client requests recursive query!(客户端请求递归查询)");
+        }
+        //第8个比特位为1表示服务器接受递归式查询请求
+        if ((flag & (1 << 7)) != 0) {
+            System.out.println("Server accept recursive query request!(服务器接受递归查询)");
+        }
+        //第6个比特位表示服务器是否拥有解析信息
+        if ((flag & (1 << 5)) != 0) {
+            System.out.println("Sever own the domain info!(拥有解析信息)");
+        } else {
+            System.out.println("Server query domain info from other servers!(无解析信息)");
+        }
+    }
+
+    /**
+     * 处理 Question 部分
+     *
+     * @param questionCount question 部分的数量
+     * @param data          buffer
+     */
+    private void readQuestions(int questionCount, ByteBuffer data) {
+        System.out.println("\n=============== Queries ===============");
+        for (int i = 0; i < questionCount; i++) {
+            readStringContent(data);
+            System.out.println();
+            //查询问题的类型
+            short type = data.getShort();
+            if (type == QUESTION_TYPE_A) {
+                System.out.println("Request IP for given domain name");
+            }
+            //查询问题的级别
+            short clasz = data.getShort();
+            System.out.println("The class of the request is " + clasz);
+        }
+    }
+
+    /**
+     * 处理 Answer 部分
+     * 回复信息的格式如下：
+     * 第一个字段是 name，它的格式如同请求数据中的域名字符串
+     * 第二个字段是类型，2字节
+     * 第三字段是级别，2字节
+     * 第4个字段是 Time to live, 4字节，表示该信息可以缓存多久
+     * 第5个字段是数据内容长度，2字节
+     * 第6个字段是内如数组，长度如同第5个字段所示
+     *
+     * @param answerCount 服务器返回的 answer 部分的数量
+     * @param data        buffer
+     */
+    private void readAnswers(int answerCount, ByteBuffer data) {
+        System.out.println("\n=============== Answers ===============");
+        /*
+         * 在读取name字段时，要注意它是否使用了压缩方式，如果是那么该字段的第一个字节就一定大于等于192，
+         * 也就是它会把第一个字节的最高2比特设置成11，接下来的1字节表示数据在dns数据段中的偏移，
+         * 即从DNS报文段开头开始偏移。
+         * 因为规定字符串长度不能超过63，即6位，因此若发现字符串的长度超过(或等于)192，就是采用了压缩
+         */
+        for (int i = 0; i < answerCount; i++) {
+            System.out.println(i + 1 + ": Name content in answer filed is:");
+            if (isNameCompression(data.get())) {
+                int offset = (int) data.get();
+                byte[] array = data.array();
+                ByteBuffer dup_buffer = ByteBuffer.wrap(array);
+                //从指定偏移处读取
+                dup_buffer.position(offset);
+                readStringContent(dup_buffer);
+                System.out.println();
+
+            } else {
+                readStringContent(data);
+                System.out.println();
+            }
+            //类型
+            short type = data.getShort();
+            System.out.println("Answer type is : " + type);
+            if (type == DNS_ANSWER_CANONICAL_NAME_FOR_ALIAS) {
+                System.out.println("This answer contains server string name..." +
+                        "(该答复中包含了服务器的字符串名称)");
+            }
+            //级别
+            short clasz = data.getShort();
+            System.out.println("Answer class: " + clasz);
+            //接下来4个字节是TTL存活时间
+            int ttl = data.getInt();
+            System.out.println("This content can cache (该域名生存时间为):" + ttl + " seconds(秒)...");
+            //接下来2字节表示数据长度，长度为4表示IP，其他长度为服务器字符串名称
+            short length = data.getShort();
+            if (type == DNS_ANSWER_CANONICAL_NAME_FOR_ALIAS) {
+                readStringContent(data);
+                System.out.println();
+            } else if (type == DNS_ANSWER_HOST_ADDRESS) {
+                //打印服务器的IP
+                byte[] ip = new byte[4];
+                for (int j = 0; j < 4; ++j) {
+                    ip[j] = data.get();
+                }
+                try {
+                    InetAddress inetAddress = InetAddress.getByAddress(ip);
+                    System.out.println("IP for domain name is(域名解析得到的IP为): " +
+                            inetAddress.getHostAddress());
+                    System.out.println("==================== DNS END ====================");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * 解析域名字符串
+     *
+     * @param buffer buffer
+     */
+    private void readStringContent(ByteBuffer buffer) {
+        byte charCount = buffer.get();
+        //如果字符第一个数正确或者使用压缩方式，输出字符串内容
+        while (charCount != 0 || isNameCompression(charCount)) {
+            if (isNameCompression(charCount)) {
+                int offset = buffer.get();
+                byte[] array = buffer.array();
+                ByteBuffer dup_buffer = ByteBuffer.wrap(array);
+                dup_buffer.position(offset);
+                readStringContent(dup_buffer);
+                break;
+            }
+            //输出字符
+            for (int i = 0; i < charCount; ++i) {
+                System.out.print((char) buffer.get());
+            }
+            charCount = buffer.get();
+            if (charCount != 0) {
+                System.out.print(".");
+            }
+        }
+    }
+
+    /**
+     * 判断字符串是否使用压缩
+     * 若 7.8位 为 1，则采用压缩，因为允许的字符串长度最长为 64，即 6位
+     *
+     * @param b 字符串本串
+     * @return
+     */
+    private boolean isNameCompression(byte b) {
+        return (b & (1 << 7)) != 0 && (b & (1 << 6)) != 0;
+    }
 }
