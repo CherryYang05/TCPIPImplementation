@@ -94,10 +94,10 @@ public class ICMPEchoHeader implements IProtocol {
             return null;
         }
 
-        HashMap<String, Object> header = new HashMap<String, Object>();
+        HashMap<String, Object> header = new HashMap<>();
         header.put("identifier", buffer.getShort(ICMP_ECHO_IDENTIFIER_OFFSET));
         header.put("sequence", buffer.getShort(ICMP_ECHO_SEQUENCE_NUM_OFFSET));
-        ;
+
         if (packet.header.length > ICMP_ECHO_ONLY_HEADER_LENGTH) {
 
             header.put("data", packet.data);

@@ -1,4 +1,4 @@
-import Application.DNSApplication;
+import Application.TFTPClient;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
@@ -89,19 +89,29 @@ public class ProtocolEntry {
         //traceroute 百度
         //String ip = "112.80.248.75";
         try {
-            InetAddress address = InetAddress.getByName(ip);
+            //InetAddress address = InetAddress.getByName(ip);
+
             //测试Ping和HPing
             //PingApp pingApp = new PingApp(1, address.getAddress());
             //PingApp pingApp = new HPingApp(1, address.getAddress());
             //pingApp.startPing();
+
             //测试TraceRoute
             //TraceRoute traceRoute = new TraceRoute(address.getAddress());
             //traceRoute.startTraceRoute();
+
             //测试DHCP
             //DHCPApplication dhcpApp = new DHCPApplication();
             //dhcpApp.dhcpDiscovery();
-            DNSApplication dnsApplication = new DNSApplication(address.getAddress(), "pan.baidu.com");
-            dnsApplication.queryDomain();
+
+            //测试DNS
+            //DNSApplication dnsApplication = new DNSApplication(address.getAddress(), "pan.baidu.com");
+            //dnsApplication.queryDomain();
+
+            //测试TFTP
+            InetAddress address = InetAddress.getByName("192.168.1.150");
+            TFTPClient tftpClient = new TFTPClient(address.getAddress());
+            tftpClient.getFile("file.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }

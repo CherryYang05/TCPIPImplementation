@@ -61,7 +61,6 @@ public class ICMPProtocolLayer implements IProtocol {
                 return buff;
             }
         }
-
         return null;
     }
 

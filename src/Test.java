@@ -39,12 +39,16 @@ public class Test {
         buffer.put((byte) 18);
         buffer.put((byte) 19);
         buffer.put((byte) 20);
-        buffer.position(0);
-        for (int i = 0; i < 11; i++) {
-            System.out.println(buffer.get());
+        buffer.position(2);
+        //for (int i = 0; i < 11; i++) {
+        //    System.out.println(buffer.get());
+        //}
+        //System.out.println(buffer.capacity());
+        //System.out.println(buffer);
+        byte[] msg = new byte[10];
+        buffer.get(msg);
+        for (int i = 0; i < 10; i++) {
+            System.out.println(msg[i]);
         }
-        System.out.println(buffer.capacity());
-        System.out.println(buffer);
-
     }
 }

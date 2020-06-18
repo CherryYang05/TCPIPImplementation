@@ -102,6 +102,9 @@ public class IPProtocolLayer implements IProtocol {
         byte[] ipArr = DataLinkLayer.getInstance().deviceIPAddress();
         ByteBuffer ip = ByteBuffer.wrap(ipArr);
         int srcIP = ip.getInt();
+        if (headerInfo.get("source_ip") != null) {
+            srcIP = (int) headerInfo.get("source_ip");
+        }
         byteBuffer.order(ByteOrder.BIG_ENDIAN);
         byteBuffer.putInt(srcIP);
 

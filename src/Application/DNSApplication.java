@@ -139,8 +139,8 @@ public class DNSApplication extends Application {
     /**
      * 组装 UDP 包头
      *
-     * @param data
-     * @return
+     * @param data data
+     * @return byte[]
      */
     private byte[] createUDPHeader(byte[] data) {
         IProtocol udpProtocol = ProtocolManager.getInstance().getProtocol("udp");
@@ -158,8 +158,8 @@ public class DNSApplication extends Application {
     /**
      * 组装 IP 包头
      *
-     * @param length
-     * @return
+     * @param length UDP 长度
+     * @return byte[]
      */
     private byte[] createIP4Header(int length) {
         IProtocol ipPrtocol = ProtocolManager.getInstance().getProtocol("ip");

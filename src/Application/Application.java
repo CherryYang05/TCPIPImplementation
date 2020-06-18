@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 
 public class Application implements IApplication {
-    protected int port = 0;
+    protected int port = 0;     //设置源端口
     private final static boolean CLOSED = false;
 
     public Application() {

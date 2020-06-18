@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="">
+    <list default="true" id="12b88ba9-dc96-4830-9344-1c43a1736f91" name="Default Changelist" comment="No.11 实现DNS协议(接收数据包)">
+      <change afterPath="$PROJECT_DIR$/src/Application/TFTPClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/TestDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dump.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dump.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/ProtocolEntry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ICMPProtocolLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ICMPProtocolLayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ICMPTimeExceededHeader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/ICMPTimeExceededHeader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/IPProtocolLayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java4TCPIP/protocol/IPProtocolLayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Application/DNSApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Application/DNSApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProtocolEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProtocolEntry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ICMPEchoHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPEchoHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ICMPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPProtocolLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/ICMPTimeExceededHeader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/ICMPTimeExceededHeader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/protocol/IPProtocolLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/IPProtocolLayer.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,6 +117,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestDemo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Java4TCPIP" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestDemo" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="jpcap.jar" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/lib/jpcap.jar" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -113,6 +135,7 @@
       <list>
         <item itemvalue="Application.ProtocolEntry" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="JUnit.TestDemo" />
       </list>
     </recent_temporary>
   </component>
@@ -150,7 +173,13 @@
       <workItem from="1589789534555" duration="3822000" />
       <workItem from="1590210616941" duration="7212000" />
       <workItem from="1590217954934" duration="25000" />
-      <workItem from="1590733036870" duration="21468000" />
+      <workItem from="1590733036870" duration="22389000" />
+      <workItem from="1590822223928" duration="3306000" />
+      <workItem from="1591010699785" duration="2157000" />
+      <workItem from="1591780417042" duration="1367000" />
+      <workItem from="1591859803533" duration="1418000" />
+      <workItem from="1592372642901" duration="583000" />
+      <workItem from="1592390329991" duration="13702000" />
     </task>
     <task id="LOCAL-00001" summary="IDEA增加了Git版本管理">
       <created>1584345050108</created>
@@ -285,7 +314,14 @@
       <option name="project" value="LOCAL" />
       <updated>1590748645153</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="No.11 实现DNS协议(接收数据包)">
+      <created>1590771407877</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1590771407877</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +358,8 @@
     <MESSAGE value="No.9 完善了DHCP协议(discovery,offer)，修改了部分bug" />
     <MESSAGE value="No.9 完善了DHCP协议(Request 和 ACK)" />
     <MESSAGE value="No.10 实现DNS协议(发送数据包)" />
-    <option name="LAST_COMMIT_MESSAGE" value="No.10 实现DNS协议(发送数据包)" />
+    <MESSAGE value="No.11 实现DNS协议(接收数据包)" />
+    <option name="LAST_COMMIT_MESSAGE" value="No.11 实现DNS协议(接收数据包)" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -341,7 +378,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/protocol/ICMPTimeExceededHeader.java</url>
-          <line>44</line>
+          <line>43</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -365,19 +402,44 @@
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Test.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Application/DNSApplication.java</url>
-          <line>320</line>
+          <line>319</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Application/DNSApplication.java</url>
-          <line>348</line>
+          <line>347</line>
           <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Test.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Test.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Test.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ProtocolEntry.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Application/TFTPClient.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Application/TFTPClient.java</url>
+          <line>155</line>
+          <option name="timeStamp" value="67" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
