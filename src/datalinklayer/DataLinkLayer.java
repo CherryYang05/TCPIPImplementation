@@ -132,7 +132,7 @@ public class DataLinkLayer extends PacketProvider implements jpcap.PacketReceive
     }
 
     /**
-     * 将收到的数据包推送给上层协议
+     * 将收到的数据包推送给上层协议，观察者模式
      *
      * @param packet
      */

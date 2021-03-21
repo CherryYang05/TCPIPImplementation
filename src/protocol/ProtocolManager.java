@@ -8,6 +8,7 @@ import jpcap.PacketReceiver;
 import jpcap.packet.EthernetPacket;
 import jpcap.packet.IPPacket;
 import jpcap.packet.Packet;
+import utils.Utility;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class ProtocolManager implements PacketReceiver {
 
             //写死路由器 IP
             try {
-                routerAddress = InetAddress.getByName("192.168.1.1");
+                routerAddress = InetAddress.getByName(Utility.getRouterIP());
                 instance.prepareRouterMac();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -147,6 +148,8 @@ public class ProtocolManager implements PacketReceiver {
     }
 
     /**
+     * 从网卡接收数据包
+     *
      * @param packet packet
      */
     @Override
@@ -159,7 +162,7 @@ public class ProtocolManager implements PacketReceiver {
         EthernetPacket etherHeader = (EthernetPacket) packet.datalink;
         /*
          * 数据链路层在发送数据包时会添加一个802.3的以太网包头，格式如下
-         * 0-7字节：[0-6]Preamble , [7]start fo frame delimiter
+         * 0-7字节：[0-6]Preamble(前导字) , [7]start fo frame delimiter(开始帧定界符)
          * 8-22字节: [8-13] destination mac, [14-19]: source mac
          * 20-21字节: type
          * type == 0x0806表示数据包是arp包, 0x0800表示IP包,0x8035是RARP包
@@ -211,6 +214,7 @@ public class ProtocolManager implements PacketReceiver {
                     break;
                 case IPPacket.IPPROTO_UDP:
                     handleUDPPacket(packet, info);
+                    break;
                 default:
                     return;
             }

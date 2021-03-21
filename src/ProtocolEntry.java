@@ -1,12 +1,12 @@
-import Application.TFTPClient;
+import Application.DHCPApplication;
 import datalinklayer.DataLinkLayer;
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
 import jpcap.NetworkInterfaceAddress;
+import utils.Utility;
 
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 
 /**
  * @Author Cherry
@@ -85,7 +85,9 @@ public class ProtocolEntry {
         linkLayerInstance.initWithOpenDevice(device);
 
         //测试PING APP 和 HPing App
-        String ip = "192.168.1.1";
+        //获取本机IP
+        String ip = Utility.getMasterIP();
+
         //traceroute 百度
         //String ip = "112.80.248.75";
         try {
@@ -101,17 +103,17 @@ public class ProtocolEntry {
             //traceRoute.startTraceRoute();
 
             //测试DHCP
-            //DHCPApplication dhcpApp = new DHCPApplication();
-            //dhcpApp.dhcpDiscovery();
+            DHCPApplication dhcpApp = new DHCPApplication();
+            dhcpApp.dhcpDiscovery();
 
             //测试DNS
             //DNSApplication dnsApplication = new DNSApplication(address.getAddress(), "pan.baidu.com");
             //dnsApplication.queryDomain();
 
             //测试TFTP
-            InetAddress address = InetAddress.getByName("192.168.1.150");
-            TFTPClient tftpClient = new TFTPClient(address.getAddress());
-            tftpClient.getFile("file.txt");
+            //InetAddress address = InetAddress.getByName("192.168.1.150");
+            //TFTPClient tftpClient = new TFTPClient(address.getAddress());
+            //tftpClient.getFile("file.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }

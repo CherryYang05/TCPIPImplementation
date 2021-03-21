@@ -19,6 +19,11 @@ public class Application implements IApplication {
         ApplicationManager.addApplication(this);
     }
 
+    /**
+     * 获取目的端口号，进行查找相应应用实例
+     *
+     * @return 目的端口号
+     */
     @Override
     public int getPort() {
         return port;

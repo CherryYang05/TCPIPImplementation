@@ -453,7 +453,7 @@ public class DHCPApplication extends Application {
 
     /**
      * 处理数据包 option 部分
-     * position 将直接定位到 Option 字段(240B)处
+     * position 将直接定位到 Option 字段 (240B) 处
      *
      * @param data data
      */

@@ -132,9 +132,9 @@ public class TFTPClient extends Application {
         headerInfo.put("data_length", length);      //UDP 报文部分
         ByteBuffer dest_ip = ByteBuffer.wrap(server_ip);
         headerInfo.put("destination_ip", dest_ip.getInt());
-        //假装是别的IP发送数据包，否则本机向本机进行TFTP请求不会发送数据包
+        //假装是别的IP发送数据包，否则虚拟机发送给主机的TFTP数据包不会走物理网卡(细节)
         try {
-            InetAddress fake_ip = InetAddress.getByName("192.168.1.101");
+            InetAddress fake_ip = InetAddress.getByName("192.168.1.102");
             ByteBuffer buf = ByteBuffer.wrap(fake_ip.getAddress());
             headerInfo.put("source_ip", buf.getInt());
         } catch (UnknownHostException e) {
